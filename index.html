@@ -27,6 +27,7 @@
         font-family: 'Roboto','sans-serif';
         line-height: 30px;
         padding-left: 10px;
+        display:none;
       }
       #floating-panel {
         background-color: #fff;
@@ -57,9 +58,9 @@
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 13,
+          zoom: 14,
           center: {lat: 42.361630000000005, lng: -71.092},
-          mapTypeId: 'satellite'
+          mapTypeId: "satellite"
         });
 
         var gradient = [
@@ -73,16 +74,24 @@
           'rgba(0, 0, 191, 1)',
           'rgba(0, 0, 159, 1)',
           'rgba(0, 0, 127, 1)',
+          'rgba(33, 0, 110, 1)',
           'rgba(63, 0, 91, 1)',
+          'rgba(99, 0, 75, 1)',
           'rgba(127, 0, 63, 1)',
           'rgba(191, 0, 31, 1)',
-          'rgba(255, 0, 0, 1)'
+          'rgba(255, 0, 0, 1)',
         ]
         heatmap = new google.maps.visualization.HeatmapLayer({
           data: getPoints(),
           map: map,
-          gradient: gradient
+          // gradient: gradient,
+          maxIntensity: 200000
+          
         });
+        //var transitLayer = new google.maps.TransitLayer();
+        //transitLayer.setMap(map);
+        // var bikeLayer = new google.maps.BicyclingLayer();
+        // bikeLayer.setMap(  );
       }
 
       function toggleHeatmap() {
@@ -91,18 +100,18 @@
 
  
       function changeRadius() {
-        heatmap.set('radius', heatmap.get('radius') ? null : 20);
+        heatmap.set('radius', heatmap.get('radius') ? null : 12);
       }
 
       function changeOpacity() {
-        heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+        heatmap.set('opacity', heatmap.get('opacity') ? null : 0.5);
       }
 
       function getPoints() {
         f= "res/data_all.html"
         xmlhttp=new XMLHttpRequest();
         xmlhttp.open("GET", f, false);
-        xmlhttp.send();
+        xmlhttp.send();   
         str = xmlhttp.responseText ;  
         rows = str.split("\n")
         points = []
